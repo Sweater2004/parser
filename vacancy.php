@@ -58,13 +58,7 @@ if (($handle = fopen("vacancy.csv", "r")) !== false) {
             } elseif ($arProps[$key]) {
                 $arSimilar = [];
                 foreach ($arProps[$key] as $propKey => $propVal) {
-                    if ($key == 'IMA') {
-                        $value = strtolower($value);
-                        if ($value == 'Илья') {
-                            $value .= 'Илья ' . $data[2];
-                        }
-                        $arSimilar[similar_text($value, $propKey)] = $propVal;
-                    }
+
                     if (stripos($propKey, $value) !== false) {
                         $value = $propVal;
                         break;
@@ -73,10 +67,6 @@ if (($handle = fopen("vacancy.csv", "r")) !== false) {
                     if (similar_text($propKey, $value) > 50) {
                         $value = $propVal;
                     }
-                }
-                if ($key == 'IMA' && !is_numeric($value)) {
-                    ksort($arSimilar);
-                    $value = array_pop($arSimilar);
                 }
             }
         }
@@ -97,3 +87,4 @@ if (($handle = fopen("vacancy.csv", "r")) !== false) {
     }
     fclose($handle);
 }
+
